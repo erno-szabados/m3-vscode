@@ -1,0 +1,112 @@
+{
+    "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+    "name": "Modula-3",
+    "fileTypes": [
+        ".mod",
+        ".def"
+    ],
+    "patterns": [
+        {
+            "include": "#keywords"
+        },
+        {
+            "include": "#support"
+        },
+        {
+            "include": "#constants"
+        },
+        {
+            "include": "#strings"
+        },
+        {
+            "include": "#comment"
+        }
+    ],
+    "repository": {
+        "keywords": {
+            "patterns": [
+                {
+                    "name": "keyword.control.m3lang",
+                    "match": "\\b(CASE|ELSE|ELSIF|EXIT|FOR|IF|LOOP|REPEAT|RETURN|THEN|UNTIL|WHILE|TYPECASE|TRY|FINALLY|LOCK|RAISE|EXCEPT)\\b"
+                },
+                {
+                    "name": "keyword.operator.m3lang",
+                    "match": "\\b(AND|DIV|IN|MOD|NOT|OR|OR\\s+ELSE|AND\\s+THEN)\\b|:=|=|#|<|<=|>|>=|\\+|-|\\*|/"
+                },
+                {
+                    "name": "keyword.other.m3lang",
+                    "match": "\\b(ARRAY|BEGIN|BY|CONST|DEFINITION|DO|END|EXPORT|FROM|IMPLEMENTATION|IMPORT|MODULE|OF|POINTER|PROCEDURE|QUALIFIED|RECORD|SET|TO|TYPE|VAR|WITH|INTERFACE|REVEAL|OBJECT|BRANDED|UNSAFE|GENERIC|OVERRIDES|METHODS|RAISES|READONLY)\\b"
+                }
+            ]
+        },
+        "support": {
+            "patterns": [
+                {
+                    "name": "support.constant.m3lang",
+                    "match": "\\b(FALSE|NIL|TRUE)\\b"
+                },
+                {
+                    "name": "support.type.m3lang",
+                    "match": "\\b(BOOLEAN|BITSET|CARDINAL|CHAR|INTEGER|LONGINT|LONGREAL|PROC|REAL)\\b"
+                },
+                {
+                    "name": "support.function.m3lang",
+                    "match": "\\b(ABS|CAP|CHR|DEC|DISPOSE|EXCL|FLOAT|HALT|HIGH|INC|INCL|MAX|MIN|NEW|ODD|ORD|SIZE|TRUNC|VAL)\\b"
+                },
+                {
+                    "name": "support.type.nonpervasive.m3lang",
+                    "match": "\\b(ADDRESS|PROCESS|WORD)\\b",
+                    "comment": "Types exported from modules SYSTEM and COROUTINES"
+                },
+                {
+                    "name": "support.function.nonpervasive.m3lang",
+                    "match": "\\b(ADR|ALLOCATE|DEALLOCATE|NEWPROCESS|TRANSFER|TSIZE)\\b",
+                    "comment": "Functions exported from modules SYSTEM, COROUTINES and Storage"
+                }
+            ]
+        },
+        "constants": {
+            "patterns": [
+                {
+                    "name": "constant.numeric.character.m3lang",
+                    "match": "[0-7]{1,3}C\\b"
+                },
+                {
+                    "name": "constant.numeric.base8.m3lang",
+                    "match": "[0-7]+B\\b"
+                },
+                {
+                    "name": "constant.numeric.base10.m3lang",
+                    "match": "[0-9]+(.[0-9]+([eE][+-]?[0-9]+)?)?"
+                },
+                {
+                    "name": "constant.numeric.base16.m3lang",
+                    "match": "[0-9][0-9A-F]*H\\b"
+                }
+            ]
+        },
+        "strings": {
+            "patterns": [
+                {
+                    "name": "string.quoted.double.m3lang",
+                    "match": "\"[^\"]*\""
+                },
+                {
+                    "name": "string.quoted.single.m3lang",
+                    "match": "'[^']*'"
+                }
+            ]
+        },
+        "comment": {
+            "name": "comment.block.m3lang",
+            "begin": "\\(\\*",
+            "end": "\\*\\)",
+            "patterns": [
+                {
+                    "include": "#comment"
+                }
+            ]
+        }
+    },
+    "scopeName": "source.m3lang"
+}

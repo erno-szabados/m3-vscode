@@ -1,22 +1,22 @@
 {
-    "name": "m2-vscode",
-    "displayName": "Modula-2",
-    "description": "Provides syntax highlighting and snippets for Modula-2",
+    "name": "m3-vscode",
+    "displayName": "Modula-3",
+    "description": "Provides syntax highlighting and snippets for Modula-3",
     "version": "0.0.1",
-    "publisher": "redstar",
-	"author": {
-		"name": "Kai Nacke"
+    "publisher": "esgdev",
+    "author": {
+        "name": "Erno Szabados"
     },
     "license": "BSD-3-Clause",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/redstar/m2-vscode"
-	},
-	"bugs": {
-		"url": "https://github.com/redstar/m2-vscode/issues"
-	},
-    "homepage": "https://github.com/redstar/m2-vscode/blob/master/README.md",
-    "icon": "images/icon.png",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/erno-szabados/m3-vscode"
+    },
+    "bugs": {
+        "url": "https://github.com/erno-szabados/m3-vscode/issues"
+    },
+    "homepage": "https://github.com/erno-szabados/m3-vscode/blob/master/README.md",
+    "icon": "images/m3.png",
     "engines": {
         "vscode": "^1.0.0"
     },
@@ -26,20 +26,20 @@
     ],
     "contributes": {
         "languages": [{
-            "id": "m2",
-            "aliases": ["Modula-2", "modula-2", "m2lang", "m2"],
-            "extensions": [".mod",".def"],
+            "id": "m3",
+            "aliases": ["Modula-3", "modula-3", "m3lang", "m3"],
+            "extensions": [".m3",".i3"],
             "configuration": "./language-configuration.json"
         }],
         "grammars": [{
-            "language": "m2",
-            "scopeName": "source.m2lang",
-            "path": "./syntaxes/m2lang.tmLanguage.json"
+            "language": "m3",
+            "scopeName": "source.m3lang",
+            "path": "./syntaxes/m3lang.tmLanguage.json"
         }],
         "snippets": [{
-            "language": "m2",
-            "scopeName": "source.m2lang",
-            "path": "./snippets/m2lang.json"
+            "language": "m3",
+            "scopeName": "source.m3lang",
+            "path": "./snippets/m3lang.json"
         }]
     }
 }
