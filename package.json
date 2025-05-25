@@ -1,7 +1,7 @@
 {
-    "name": "m3-vscode",
-    "displayName": "Modula-3",
-    "description": "Provides syntax highlighting and snippets for Modula-3",
+    "name": "oberon-vscode",
+    "displayName": "Oberon-07",
+    "description": "Provides syntax highlighting and snippets for Oberon-07",
     "version": "0.0.1",
     "publisher": "esgdev",
     "author": {
@@ -15,8 +15,8 @@
     "bugs": {
         "url": "https://github.com/erno-szabados/m3-vscode/issues"
     },
-    "homepage": "https://github.com/erno-szabados/m3-vscode/blob/master/README.md",
-    "icon": "images/m3.png",
+    "homepage": "https://github.com/erno-szabados/m3-vscode/blob/oberon-07/README.md",
+    "icon": "images/o7.png",
     "engines": {
         "vscode": "^1.0.0"
     },
@@ -26,20 +26,20 @@
     ],
     "contributes": {
         "languages": [{
-            "id": "m3",
-            "aliases": ["Modula-3", "modula-3", "m3lang", "m3"],
-            "extensions": [".m3",".i3"],
+            "id": "o7lang",
+            "aliases": ["Oberon-07", "Oberon-07", "o7lang", "o7"],
+            "extensions": [".ob07",".mod"],
             "configuration": "./language-configuration.json"
         }],
         "grammars": [{
-            "language": "m3",
-            "scopeName": "source.m3lang",
-            "path": "./syntaxes/m3lang.tmLanguage.json"
+            "language": "o7lang",
+            "scopeName": "source.o7lang",
+            "path": "./syntaxes/o7lang.tmLanguage.json"
         }],
         "snippets": [{
-            "language": "m3",
-            "scopeName": "source.m3lang",
-            "path": "./snippets/m3lang.json"
+            "language": "o7lang",
+            "scopeName": "source.o7lang",
+            "path": "./snippets/o7lang.json"
         }]
     }
 }

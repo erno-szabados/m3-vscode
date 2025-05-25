@@ -1,7 +1,7 @@
 Modula-3 syntax highlighting and snippets for Visual Studio Code
 ================================================================
 
-This extension provides syntax highlihting and snippets for Modula-3.
+This extension provides syntax highlihting and snippets for Oberon-07.
 
 ## Features
 
@@ -25,6 +25,6 @@ This extension provides syntax highlihting and snippets for Modula-3.
 
 Initial release of [m3-vscode](https://github.com/erno-szabados/m3-vscode).
 
-Features syntax highlighting and snippets for the Modula-3 programming language.
+Features syntax highlighting and snippets for the Oberon-07 programming language.
 
 Forked from redstar's m2 syntax highlighter. [m2-vscode](https://github.com/redstar/m2-vscode).
