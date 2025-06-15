@@ -31,19 +31,16 @@ export class OberonDocumentSymbolProvider implements vscode.DocumentSymbolProvid
         }
         
         const moduleName = moduleMatch[1];
-        const moduleStartLine = this.getLineNumber(text, moduleMatch.index!);
+        const moduleStartPos = document.positionAt(moduleMatch.index!);
         
         // Find module end
         const endPattern = new RegExp(`\\bEND\\s+${moduleName}\\s*\\.`, 'i');
         const endMatch = text.match(endPattern);
-        const moduleEndLine = endMatch ? 
-            this.getLineNumber(text, endMatch.index! + endMatch[0].length) : 
-            document.lineCount - 1;
+        const moduleEndPos = endMatch ? 
+            document.positionAt(endMatch.index! + endMatch[0].length) : 
+            new vscode.Position(document.lineCount - 1, 0);
         
-        const moduleRange = new vscode.Range(
-            moduleStartLine, 0,
-            moduleEndLine, 0
-        );
+        const moduleRange = new vscode.Range(moduleStartPos, moduleEndPos);
         
         const moduleSymbol = new vscode.DocumentSymbol(
             moduleName,
@@ -53,11 +50,10 @@ export class OberonDocumentSymbolProvider implements vscode.DocumentSymbolProvid
             moduleRange
         );
         
-        // Parse sections within the module
-        const moduleContent = this.getModuleContent(text, moduleMatch.index!, endMatch?.index);
+        // Parse sections within the module - now pass the full text and document
         
         // Parse IMPORT section
-        const importSymbols = this.parseImportSection(moduleContent, document, moduleMatch.index!);
+        const importSymbols = this.parseImportSection(text, document);
         if (importSymbols.length > 0) {
             const importContainer = new vscode.DocumentSymbol(
                 'IMPORTS',
@@ -71,7 +67,7 @@ export class OberonDocumentSymbolProvider implements vscode.DocumentSymbolProvid
         }
         
         // Parse CONST section
-        const constSymbols = this.parseConstSection(moduleContent, document, moduleMatch.index!);
+        const constSymbols = this.parseConstSection(text, document);
         if (constSymbols.length > 0) {
             const constContainer = new vscode.DocumentSymbol(
                 'CONST',
@@ -85,7 +81,7 @@ export class OberonDocumentSymbolProvider implements vscode.DocumentSymbolProvid
         }
         
         // Parse TYPE section
-        const typeSymbols = this.parseTypeSection(moduleContent, document, moduleMatch.index!);
+        const typeSymbols = this.parseTypeSection(text, document);
         if (typeSymbols.length > 0) {
             const typeContainer = new vscode.DocumentSymbol(
                 'TYPE',
@@ -99,7 +95,7 @@ export class OberonDocumentSymbolProvider implements vscode.DocumentSymbolProvid
         }
         
         // Parse VAR section
-        const varSymbols = this.parseVarSection(moduleContent, document, moduleMatch.index!);
+        const varSymbols = this.parseVarSection(text, document);
         if (varSymbols.length > 0) {
             const varContainer = new vscode.DocumentSymbol(
                 'VAR',
@@ -113,20 +109,13 @@ export class OberonDocumentSymbolProvider implements vscode.DocumentSymbolProvid
         }
         
         // Parse PROCEDURE declarations
-        const procSymbols = this.parseProcedures(moduleContent, document, moduleMatch.index!);
+        const procSymbols = this.parseProcedures(text, document);
         procSymbols.forEach(symbol => moduleSymbol.children.push(symbol));
         
         return moduleSymbol;
     }
     
-    private getModuleContent(text: string, moduleStart: number, moduleEnd?: number): string {
-        if (moduleEnd !== undefined) {
-            return text.substring(moduleStart, moduleEnd);
-        }
-        return text.substring(moduleStart);
-    }
-    
-    private parseImportSection(text: string, document: vscode.TextDocument, offset: number): vscode.DocumentSymbol[] {
+    private parseImportSection(text: string, document: vscode.TextDocument): vscode.DocumentSymbol[] {
         const symbols: vscode.DocumentSymbol[] = [];
         const importMatch = text.match(/\bIMPORT\s+([^;]+);/i);
         
@@ -148,8 +137,8 @@ export class OberonDocumentSymbolProvider implements vscode.DocumentSymbolProvid
                     detail = 'imported module';
                 }
                 
-                const importPos = this.getLineNumber(text, importMatch.index! + offset);
-                const range = new vscode.Range(importPos, 0, importPos, 0);
+                const importPos = document.positionAt(importMatch.index!);
+                const range = new vscode.Range(importPos, importPos);
                 
                 symbols.push(new vscode.DocumentSymbol(
                     importName,
@@ -164,7 +153,7 @@ export class OberonDocumentSymbolProvider implements vscode.DocumentSymbolProvid
         return symbols;
     }
     
-    private parseConstSection(text: string, document: vscode.TextDocument, offset: number): vscode.DocumentSymbol[] {
+    private parseConstSection(text: string, document: vscode.TextDocument): vscode.DocumentSymbol[] {
         const symbols: vscode.DocumentSymbol[] = [];
         
         // Find CONST section
@@ -183,8 +172,9 @@ export class OberonDocumentSymbolProvider implements vscode.DocumentSymbolProvid
             const isExported = match[2] === '*';
             const constValue = match[3].trim();
             
-            const constPos = this.getLineNumber(text, constSectionOffset + match.index! + offset);
-            const range = new vscode.Range(constPos, 0, constPos, 0);
+            const absolutePosition = constSectionOffset + match.index!;
+            const constPos = document.positionAt(absolutePosition);
+            const range = new vscode.Range(constPos, constPos);
             
             symbols.push(new vscode.DocumentSymbol(
                 constName + (isExported ? '*' : ''),
@@ -198,7 +188,7 @@ export class OberonDocumentSymbolProvider implements vscode.DocumentSymbolProvid
         return symbols;
     }
     
-    private parseTypeSection(text: string, document: vscode.TextDocument, offset: number): vscode.DocumentSymbol[] {
+    private parseTypeSection(text: string, document: vscode.TextDocument): vscode.DocumentSymbol[] {
         const symbols: vscode.DocumentSymbol[] = [];
         
         // Find TYPE section
@@ -226,8 +216,9 @@ export class OberonDocumentSymbolProvider implements vscode.DocumentSymbolProvid
                 symbolKind = vscode.SymbolKind.Interface;
             }
             
-            const typePos = this.getLineNumber(text, typeSectionOffset + match.index! + offset);
-            const range = new vscode.Range(typePos, 0, typePos, 0);
+            const absolutePosition = typeSectionOffset + match.index!;
+            const typePos = document.positionAt(absolutePosition);
+            const range = new vscode.Range(typePos, typePos);
             
             symbols.push(new vscode.DocumentSymbol(
                 typeName + (isExported ? '*' : ''),
@@ -241,7 +232,7 @@ export class OberonDocumentSymbolProvider implements vscode.DocumentSymbolProvid
         return symbols;
     }
     
-    private parseVarSection(text: string, document: vscode.TextDocument, offset: number): vscode.DocumentSymbol[] {
+    private parseVarSection(text: string, document: vscode.TextDocument): vscode.DocumentSymbol[] {
         const symbols: vscode.DocumentSymbol[] = [];
         
         // Find VAR section
@@ -263,8 +254,9 @@ export class OberonDocumentSymbolProvider implements vscode.DocumentSymbolProvid
                 const cleanName = varName.replace('*', '');
                 const isExported = varName.includes('*');
                 
-                const varPos = this.getLineNumber(text, varSectionOffset + match.index! + offset);
-                const range = new vscode.Range(varPos, 0, varPos, 0);
+                const absolutePosition = varSectionOffset + match.index!;
+                const varPos = document.positionAt(absolutePosition);
+                const range = new vscode.Range(varPos, varPos);
                 
                 symbols.push(new vscode.DocumentSymbol(
                     cleanName + (isExported ? '*' : ''),
@@ -279,7 +271,7 @@ export class OberonDocumentSymbolProvider implements vscode.DocumentSymbolProvid
         return symbols;
     }
     
-    private parseProcedures(text: string, document: vscode.TextDocument, offset: number): vscode.DocumentSymbol[] {
+    private parseProcedures(text: string, document: vscode.TextDocument): vscode.DocumentSymbol[] {
         const symbols: vscode.DocumentSymbol[] = [];
         
         // Match procedure declarations
@@ -293,11 +285,11 @@ export class OberonDocumentSymbolProvider implements vscode.DocumentSymbolProvid
             const returnType = match[4] || '';
             const procBody = match[5];
             
-            const procStartPos = this.getLineNumber(text, match.index! + offset);
-            const procEndPos = this.getLineNumber(text, match.index! + match[0].length + offset);
+            const procStartPos = document.positionAt(match.index!);
+            const procEndPos = document.positionAt(match.index! + match[0].length);
             
-            const range = new vscode.Range(procStartPos, 0, procEndPos, 0);
-            const selectionRange = new vscode.Range(procStartPos, 0, procStartPos, 0);
+            const range = new vscode.Range(procStartPos, procEndPos);
+            const selectionRange = new vscode.Range(procStartPos, procStartPos);
             
             let symbolKind = vscode.SymbolKind.Function;
             if (returnType) {
@@ -316,7 +308,9 @@ export class OberonDocumentSymbolProvider implements vscode.DocumentSymbolProvid
             );
             
             // Parse nested procedures within this procedure
-            const nestedProcs = this.parseProcedures(procBody, document, match.index! + offset);
+            // For nested procedures, we create a simulated document context
+            const procBodyStart = match.index! + match[0].indexOf(procBody);
+            const nestedProcs = this.parseNestedProcedures(procBody, document, procBodyStart);
             nestedProcs.forEach(nested => procSymbol.children.push(nested));
             
             symbols.push(procSymbol);
@@ -325,7 +319,47 @@ export class OberonDocumentSymbolProvider implements vscode.DocumentSymbolProvid
         return symbols;
     }
     
-    private getLineNumber(text: string, position: number): number {
-        return text.substring(0, position).split('\n').length - 1;
+    private parseNestedProcedures(procBody: string, document: vscode.TextDocument, bodyOffset: number): vscode.DocumentSymbol[] {
+        const symbols: vscode.DocumentSymbol[] = [];
+        
+        // Match nested procedure declarations within the procedure body
+        const procRegex = /\bPROCEDURE\s+(\w+)(\*?)\s*(\([^)]*\))?\s*(:\s*\w+)?\s*;(.*?)\bEND\s+\1\b/gis;
+        let match;
+        
+        while ((match = procRegex.exec(procBody)) !== null) {
+            const procName = match[1];
+            const isExported = match[2] === '*';
+            const parameters = match[3] || '';
+            const returnType = match[4] || '';
+            
+            const absoluteStart = bodyOffset + match.index!;
+            const absoluteEnd = bodyOffset + match.index! + match[0].length;
+            
+            const procStartPos = document.positionAt(absoluteStart);
+            const procEndPos = document.positionAt(absoluteEnd);
+            
+            const range = new vscode.Range(procStartPos, procEndPos);
+            const selectionRange = new vscode.Range(procStartPos, procStartPos);
+            
+            let symbolKind = vscode.SymbolKind.Function;
+            if (returnType) {
+                symbolKind = vscode.SymbolKind.Function;
+            } else {
+                symbolKind = vscode.SymbolKind.Method;
+            }
+            
+            const signature = `${procName}${parameters}${returnType}`;
+            const procSymbol = new vscode.DocumentSymbol(
+                procName + (isExported ? '*' : ''),
+                signature,
+                symbolKind,
+                range,
+                selectionRange
+            );
+            
+            symbols.push(procSymbol);
+        }
+        
+        return symbols;
     }
 }
