@@ -1,8 +1,8 @@
 {
     "name": "oberon-vscode",
     "displayName": "Oberon-07",
-    "description": "Provides syntax highlighting and snippets for Oberon-07",
-    "version": "0.0.1",
+    "description": "Provides syntax highlighting, snippets, and navigation for Oberon-07",
+    "version": "0.0.3",
     "publisher": "esgdev",
     "author": {
         "name": "Erno Szabados"
@@ -17,29 +17,60 @@
     },
     "homepage": "https://github.com/erno-szabados/m3-vscode/blob/oberon-07/README.md",
     "icon": "images/o7.png",
+    "main": "./out/extension.js",
     "engines": {
-        "vscode": "^1.0.0"
+        "vscode": "^1.74.0"
     },
     "categories": [
         "Programming Languages",
         "Snippets"
     ],
+    "activationEvents": [
+        "onLanguage:o7lang"
+    ],
     "contributes": {
-        "languages": [{
-            "id": "o7lang",
-            "aliases": ["Oberon-07", "Oberon-07", "o7lang", "o7"],
-            "extensions": [".ob07",".mod"],
-            "configuration": "./language-configuration.json"
-        }],
-        "grammars": [{
-            "language": "o7lang",
-            "scopeName": "source.o7lang",
-            "path": "./syntaxes/o7lang.tmLanguage.json"
-        }],
-        "snippets": [{
-            "language": "o7lang",
-            "scopeName": "source.o7lang",
-            "path": "./snippets/o7lang.json"
-        }]
+        "languages": [
+            {
+                "id": "o7lang",
+                "aliases": [
+                    "Oberon-07",
+                    "Oberon-07",
+                    "o7lang",
+                    "o7"
+                ],
+                "extensions": [
+                    ".ob07",
+                    ".mod",
+                    ".obn"
+                ],
+                "configuration": "./language-configuration.json"
+            }
+        ],
+        "grammars": [
+            {
+                "language": "o7lang",
+                "scopeName": "source.o7lang",
+                "path": "./syntaxes/o7lang.tmLanguage.json"
+            }
+        ],
+        "snippets": [
+            {
+                "language": "o7lang",
+                "scopeName": "source.o7lang",
+                "path": "./snippets/o7lang.json"
+            }
+        ]
+    },
+    "scripts": {
+        "vscode:prepublish": "npm run compile",
+        "compile": "tsc -p ./",
+        "watch": "tsc -watch -p ./",
+        "package": "vsce package"
+    },
+    "devDependencies": {
+        "@types/node": "^18.x",
+        "@types/vscode": "^1.74.0",
+        "typescript": "^4.9.0",
+        "vsce": "^2.15.0"
     }
 }
