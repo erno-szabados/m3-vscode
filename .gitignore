@@ -1,0 +1,33 @@
+# VS Code Extension Package
+*.vsix
+
+# Node.js dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# TypeScript compilation output
+out/
+*.tsbuildinfo
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE files
+.vscode-test/
+.nyc_output
+coverage/
+
+# Logs
+logs
+*.log
+
+# Package lock files (optional - some prefer to commit these)
+# package-lock.json

@@ -1,6 +1,6 @@
 {
         "var_declaration": {
-                "scope": "source.m3lang",
+                "scope": "source.o7lang",
                 "prefix": "VAR",
                 "body": [
                         "VAR ${1:name}: ${0:type}"
@@ -8,7 +8,7 @@
                 "description": "Variable declaration"
         },
         "const_declaration": {
-                "scope": "source.m3lang",
+                "scope": "source.o7lang",
                 "prefix": "CONST",
                 "body": [
                         "CONST ${1:name} = ${0:value}"
@@ -16,7 +16,7 @@
                 "description": "Constant declaration"
         },
         "loop_statement": {
-                "scope": "source.m3lang",
+                "scope": "source.o7lang",
                 "prefix": "LOOP",
                 "body": [
                         "LOOP",
@@ -26,7 +26,7 @@
                 "description": "LOOP statement"
         },
         "while_statement": {
-                "scope": "source.m3lang",
+                "scope": "source.o7lang",
                 "prefix": "WHILE",
                 "body": [
                         "WHILE ${1:expr} DO",
@@ -36,17 +36,17 @@
                 "description": "WHILE statement"
         },
         "case_statement": {
-                "scope": "source.m3lang",
+                "scope": "source.o7lang",
                 "prefix": "CASE",
                 "body": [
                         "CASE ${1:expr} OF",
                         "  ${2:label}: ${0}",
                         "END"
                 ],
-                "description": "WHILE statement"
+                "description": "CASE statement"
         },
         "if_statement": {
-                "scope": "source.m3lang",
+                "scope": "source.o7lang",
                 "prefix": "IF",
                 "body": [
                         "IF ${1:expr} THEN",
@@ -56,7 +56,7 @@
                 "description": "IF statement"
         },
         "ifelse_statement": {
-                "scope": "source.m3lang",
+                "scope": "source.o7lang",
                 "prefix": "IF",
                 "body": [
                         "IF ${1:expr} THEN",
@@ -68,7 +68,7 @@
                 "description": "IF/ELSE statement"
         },
         "ifelsifelse_statement": {
-                "scope": "source.m3lang",
+                "scope": "source.o7lang",
                 "prefix": "IF",
                 "body": [
                         "IF ${1:expr} THEN",
@@ -82,7 +82,7 @@
                 "description": "IF/ELSIF/ELSE statement"
         },
         "elsif_statement": {
-                "scope": "source.m3lang",
+                "scope": "source.o7lang",
                 "prefix": "ELSIF",
                 "body": [
                         "ELSIF ${1:expr} THEN",
@@ -92,7 +92,7 @@
                 "description": "ELSIF statement"
         },
         "for_statement": {
-                "scope": "source.m3lang",
+                "scope": "source.o7lang",
                 "prefix": "FOR",
                 "body": [
                         "FOR ${1:ident} := ${2:expr} TO ${3:expr} DO",
@@ -102,7 +102,7 @@
                 "description": "FOR statement"
         },
         "forby_statement": {
-                "scope": "source.m3lang",
+                "scope": "source.o7lang",
                 "prefix": "FOR",
                 "body": [
                         "FOR ${1:ident} := ${2:expr} TO ${3:expr} BY ${4:expr} DO",
@@ -110,15 +110,5 @@
                         "END"
                 ],
                 "description": "FOR/BY statement"
-        },
-        "with_statement": {
-                "scope": "source.m3lang",
-                "prefix": "WITH",
-                "body": [
-                        "WITH ${1:expr} DO",
-                        "  ${0}",
-                        "END"
-                ],
-                "description": "WITH statement"
         }
 }

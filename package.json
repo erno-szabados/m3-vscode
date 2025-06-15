@@ -1,8 +1,8 @@
 {
-    "name": "m3-vscode",
-    "displayName": "Modula-3",
-    "description": "Provides syntax highlighting and snippets for Modula-3",
-    "version": "0.0.1",
+    "name": "oberon-vscode",
+    "displayName": "Oberon-07",
+    "description": "Provides syntax highlighting, snippets, and navigation for Oberon-07",
+    "version": "0.0.3",
     "publisher": "esgdev",
     "author": {
         "name": "Erno Szabados"
@@ -15,31 +15,61 @@
     "bugs": {
         "url": "https://github.com/erno-szabados/m3-vscode/issues"
     },
-    "homepage": "https://github.com/erno-szabados/m3-vscode/blob/master/README.md",
-    "icon": "images/m3.png",
+    "homepage": "https://github.com/erno-szabados/m3-vscode/blob/oberon-07/README.md",
+    "icon": "images/o7.png",
+    "main": "./out/extension.js",
     "engines": {
-        "vscode": "^1.0.0"
+        "vscode": "^1.74.0"
     },
     "categories": [
         "Programming Languages",
         "Snippets"
     ],
+    "activationEvents": [
+        "onLanguage:o7lang"
+    ],
     "contributes": {
-        "languages": [{
-            "id": "m3",
-            "aliases": ["Modula-3", "modula-3", "m3lang", "m3"],
-            "extensions": [".m3",".i3"],
-            "configuration": "./language-configuration.json"
-        }],
-        "grammars": [{
-            "language": "m3",
-            "scopeName": "source.m3lang",
-            "path": "./syntaxes/m3lang.tmLanguage.json"
-        }],
-        "snippets": [{
-            "language": "m3",
-            "scopeName": "source.m3lang",
-            "path": "./snippets/m3lang.json"
-        }]
+        "languages": [
+            {
+                "id": "o7lang",
+                "aliases": [
+                    "Oberon-07",
+                    "o7lang",
+                    "o7"
+                ],
+                "extensions": [
+                    ".ob07",
+                    ".mod",
+                    ".obn"
+                ],
+                "configuration": "./language-configuration.json"
+            }
+        ],
+        "grammars": [
+            {
+                "language": "o7lang",
+                "scopeName": "source.o7lang",
+                "path": "./syntaxes/o7lang.tmLanguage.json"
+            }
+        ],
+        "snippets": [
+            {
+                "language": "o7lang",
+                "scopeName": "source.o7lang",
+                "path": "./snippets/o7lang.json"
+            }
+        ]
+    },
+    "scripts": {
+        "vscode:prepublish": "npm run compile",
+        "compile": "tsc -p ./",
+        "watch": "tsc -watch -p ./",
+        "package": "vsce package"
+    },
+    "devDependencies": {
+        "@types/node": "^18.x",
+        "@types/vscode": "^1.74.0",
+        "typescript": "^4.9.0",
+        "vsce": "^2.15.0"
     }
 }

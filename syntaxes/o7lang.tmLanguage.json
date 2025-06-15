@@ -1,0 +1,98 @@
+{
+    "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+    "name": "Oberon-07",
+    "fileTypes": [
+        ".ob07",
+        ".mod"
+    ],
+    "patterns": [
+        {
+            "include": "#keywords"
+        },
+        {
+            "include": "#support"
+        },
+        {
+            "include": "#constants"
+        },
+        {
+            "include": "#strings"
+        },
+        {
+            "include": "#comment"
+        }
+    ],
+    "repository": {
+        "keywords": {
+            "patterns": [
+                {
+                    "name": "keyword.control.o7lang",
+                    "match": "\\b(CASE|DO|ELSE|ELSIF|EXIT|FOR|IF|LOOP|OF|REPEAT|RETURN|THEN|TO|UNTIL|WHILE|BY)\\b"
+                },
+                {
+                    "name": "keyword.operator.o7lang",
+                    "match": "\\b(DIV|IN|IS|MOD|OR)\\b|:=|#|<=?|>=?|\\+|-|\\*|/|&|~|\\^"
+                },
+                {
+                    "name": "keyword.other.o7lang",
+                    "match": "\\b(ARRAY|BEGIN|CONST|END|IMPORT|MODULE|POINTER|PROCEDURE|RECORD|TYPE|VAR)\\b"
+                }
+            ]
+        },
+        "support": {
+            "patterns": [
+                {
+                    "name": "support.constant.o7lang",
+                    "match": "\\b(FALSE|NIL|TRUE)\\b"
+                },
+                {
+                    "name": "support.type.o7lang",
+                    "match": "\\b(BOOLEAN|BYTE|CHAR|INTEGER|REAL|SET)\\b"
+                },
+                {
+                    "name": "support.function.o7lang",
+                    "match": "\\b(ABS|ASR|ASSERT|CHR|DEC|EXCL|FLOOR|FLT|INC|INCL|LEN|LSL|NEW|ODD|ORD|PACK|ROR|UNPK)\\b"
+                }
+            ]
+        },
+        "constants": {
+            "patterns": [
+                {
+                    "name": "constant.numeric.integer.hexadecimal.o7lang",
+                    "match": "\\b[0-9][0-9A-F]*H\\b"
+                },
+                {
+                    "name": "constant.numeric.real.o7lang",
+                    "match": "\\b[0-9]+\\.[0-9]+([Ee][+-]?[0-9]+)?\\b"
+                },
+                {
+                    "name": "constant.numeric.integer.decimal.o7lang",
+                    "match": "\\b[0-9]+\\b(?![.0-9A-FHX])"
+                }
+            ]
+        },
+        "strings": {
+            "patterns": [
+                {
+                    "name": "string.quoted.double.o7lang",
+                    "match": "\"[^\"]*\""
+                },
+                {
+                    "name": "constant.character.literal.o7lang",
+                    "match": "\\b[0-9][0-9A-F]*X\\b"
+                }
+            ]
+        },
+        "comment": {
+            "name": "comment.block.o7lang",
+            "begin": "\\(\\*",
+            "end": "\\*\\)",
+            "patterns": [
+                {
+                    "include": "#comment"
+                }
+            ]
+        }
+    },
+    "scopeName": "source.o7lang"
+}
