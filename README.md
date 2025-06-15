@@ -49,9 +49,13 @@ Navigate through your Oberon code with the document outline that shows:
 
 ## Release Notes
 
+### 0.0.3
+Basic Symbol provider based on regex parsing.
+
+
 ### 0.0.1
 
-Initial release of [m3-vscode](https://github.com/erno-szabados/m3-vscode).
+Initial release of [oberon07-vscode](https://github.com/erno-szabados/oberon07-vscode).
 
 Features syntax highlighting and snippets for the Oberon-07 programming language.
 
